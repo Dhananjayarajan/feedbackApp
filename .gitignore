@@ -1,2 +1,22 @@
-node_modules
+# Node dependencies
+node_modules/
+
+# Env files
+.env
+
 dev.js
+
+# OS-specific
+.DS_Store
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# VS Code
+.vscode/
+
+# Build
+dist/
+build/

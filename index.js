@@ -11,6 +11,11 @@ mongoose.connect(keys.mongoURL);
 
 const app = express();
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config(); 
+}
+
+
 app.use(
 	cookieSession({
 		maxAge : 30 * 24 * 60 * 60 * 1000,
