@@ -3,18 +3,23 @@
   "version": "1.0.0",
   "main": "index.js",
   "engines": {
-    "node" : "23.11.0",
-    "npm" : "10.9.2"
+    "node": "23.11.0",
+    "npm": "10.9.2"
   },
-
   "scripts": {
- "start": "node index.js"
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "express": "^5.1.0"
+    "cookie": "^1.0.2",
+    "cookie-session": "^2.1.0",
+    "express": "^5.1.0",
+    "mongoose": "^8.14.2",
+    "passport": "^0.5.3",
+    "passport-google-oauth20": "^2.0.0",
+    "session": "^0.1.0"
   }
 }
