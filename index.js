@@ -13,11 +13,14 @@ mongoose.connect(keys.mongoURL);
 
 const app = express();
 
-
-require('./routes/stripeWebhook')(app);
-
-
-app.use(bodyParser.json());
+// Conditional body parsing middleware: skip json parser for /api/webhook
+app.use((req, res, next) => {
+  if (req.originalUrl === '/api/webhook') {
+    next(); // skip JSON parsing for webhook, so raw body is available
+  } else {
+    bodyParser.json()(req, res, next); // parse JSON for all other routes
+  }
+});
 
 app.use(
   cookieSession({
@@ -29,23 +32,19 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-
+// Routes
 require('./routes/authRoutes')(app);
 require('./routes/billingRoutes')(app);
+require('./routes/stripeWebhook')(app); // webhook route expects raw body
 
-
+// Serve static assets if in production
 if (process.env.NODE_ENV === 'production') {
   const path = require('path');
-
-
   app.use(express.static(path.resolve(__dirname, 'client', 'dist')));
-
-
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'));
   });
 }
-
 
 const PORT = process.env.PORT || 5005;
 app.listen(PORT, () => {
