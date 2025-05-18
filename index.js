@@ -32,6 +32,8 @@ app.use(passport.session());
 
 require('./routes/authRoutes')(app);
 require('./routes/billingRoutes')(app);
+require('./routes/stripeWebhook')(app);
+
 
 if (process.env.NODE_ENV === 'production') {
   const path = require('path');

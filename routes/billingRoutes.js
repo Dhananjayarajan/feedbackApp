@@ -19,11 +19,11 @@ module.exports = (app) => {
         },
       ],
       mode: 'payment',
-      customer_email: req.user.email, 
+      customer_email: req.user.email,
       success_url: `${process.env.REDIRECT_DOMAIN}/surveys?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.REDIRECT_DOMAIN}/surveys`,
       metadata: {
-        googleId: req.user.googleId, 
+        googleId: req.user.googleId,
       },
     });
 
