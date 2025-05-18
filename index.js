@@ -8,17 +8,16 @@ require('./models/user');
 require('./services/passport');
 const keys = require('./config/keys');
 
-// Connect to MongoDB
 mongoose.connect(keys.mongoURL);
 
 const app = express();
 
-// Conditional body parsing middleware: skip json parser for /api/webhook
+
 app.use((req, res, next) => {
   if (req.originalUrl === '/api/webhook') {
-    next(); // skip JSON parsing for webhook, so raw body is available
+    next(); 
   } else {
-    bodyParser.json()(req, res, next); // parse JSON for all other routes
+    bodyParser.json()(req, res, next); // 
   }
 });
 
@@ -35,9 +34,7 @@ app.use(passport.session());
 // Routes
 require('./routes/authRoutes')(app);
 require('./routes/billingRoutes')(app);
-require('./routes/stripeWebhook')(app); // webhook route expects raw body
-
-// Serve static assets if in production
+require('./routes/stripeWebhook')(app); // 
 if (process.env.NODE_ENV === 'production') {
   const path = require('path');
   app.use(express.static(path.resolve(__dirname, 'client', 'dist')));

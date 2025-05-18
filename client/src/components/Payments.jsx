@@ -1,26 +1,3 @@
-// import React, {Component} from 'react'
-// import StripeCheckOUT from 'react-stripe-checkout'
-// import {connect} from 'react-redux'
-// import * as actions from '../actions'
-
-// class Payments extends Component {
-// 	render() {
-// 		return (
-// 			<div>
-// 				<StripeCheckOUT name='Feedback APP'
-// 				description='$5 for 5 email credits'
-// 				amount={500} token={token => this.props.handleToken(token)} stripeKey={import.meta.env.VITE_APP_STRIPE_KEY}>
-// 					<button className='btn black'>Add Credits</button>
-// 				</StripeCheckOUT>
-// 			</div>
-// 		)
-// 	}
-
-// }
-
-// export default connect(null, actions)(Payments) 
-
-
 import React from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 
