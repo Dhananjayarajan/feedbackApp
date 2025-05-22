@@ -5,9 +5,11 @@ const passport = require('passport');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 require('./models/user');
+require('./models/survey')
 require('./services/passport');
 const keys = require('./config/keys');
 
+mongoose.Promise = global.Promise;
 mongoose.connect(keys.mongoURL);
 
 const app = express();
@@ -17,10 +19,11 @@ app.use((req, res, next) => {
   if (req.originalUrl === '/api/webhook') {
     next(); 
   } else {
-    bodyParser.json()(req, res, next); // 
+    bodyParser.json()(req, res, next); 
   }
 });
 
+app.use(bodyParser.json());
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,
@@ -31,10 +34,11 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Routes
 require('./routes/authRoutes')(app);
 require('./routes/billingRoutes')(app);
-require('./routes/stripeWebhook')(app); // 
+require('./routes/stripeWebhook')(app);
+require('./routes/surveyRoutes')(app);
+
 if (process.env.NODE_ENV === 'production') {
   const path = require('path');
   app.use(express.static(path.resolve(__dirname, 'client', 'dist')));

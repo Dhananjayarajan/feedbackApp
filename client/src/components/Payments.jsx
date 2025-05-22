@@ -1,7 +1,7 @@
 import React from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 
-const stripePromise = loadStripe(import.meta.env.VITE_APP_STRIPE_KEY); // Your publishable key
+const stripePromise = loadStripe(import.meta.env.VITE_APP_STRIPE_KEY); 
 
 const Payments = () => {
   const handleClick = async () => {

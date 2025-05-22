@@ -1,35 +1,36 @@
-import React, {Component} from "react";
-import {BrowserRouter, Route} from 'react-router-dom'
-import { connect } from "react-redux";
-import * as actions from '../actions'
+import React, { useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { fetchUser } from "../store/slices/authSlice";
+import ThankYouPage from "./ThankYouPage";
 
 import Header from "./Header";
 import Landing from "./Landing";
-import Dashboard from './Dashboard'
+import Dashboard from "./Dashboard";
+import SurveyNew from "./surveys/SurveyNew";
 
-const SurveyNew = ()=> <h2>SurveyNew</h2>
+const App = () => {
+  const dispatch = useDispatch();
 
-class App extends Component {
-	componentDidMount(){
-this.props.fetchUser()
-	}
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, [dispatch]);
 
-render() {
-	return (<div className="container">
-		<BrowserRouter>
-		<div>
-			<Header />
-			<Route exact path='/' component={Landing}></Route>
-			<Route exact path='/surveys' component={Dashboard}></Route>
-			<Route path='/surveys/new' component={SurveyNew}></Route>
+  return (
+    <div className="container">
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/surveys" element={<Dashboard />} />
+          <Route path="/surveys/new" element={<SurveyNew />} />
+          <Route path="/api/stripe/success" element={<Dashboard />} />
+          <Route path="/api/stripe/cancel" element={<Landing />} />
+          <Route path="/api/surveys/thanks" element={<ThankYouPage />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
+  );
+};
 
-		</div>
-		</BrowserRouter>
-	</div>
-	)
-
-}
-
-}
-
-export default connect(null, actions)(App);
+export default App;
